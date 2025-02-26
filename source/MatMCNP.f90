@@ -218,12 +218,34 @@ PROGRAM MatMCNP
       WRITE(UNIT=12,FMT=1006)
       DO i=1, number_elements
           CALL assign_z_to_element(z_of_element(i), xgen_z)
-          WRITE(UNIT=12,FMT=1007) xgen_z, w_percent(i)
+          IF (i < number_elements) THEN
+	     WRITE(UNIT=12,FMT=1007) xgen_z, w_percent(i)
+          ELSE
+	     WRITE(UNIT=12,FMT=1009) xgen_z, w_percent(i)
+          END IF
       END DO
       WRITE(UNIT=12,FMT=1008) compound_density
       CLOSE(11)
       CLOSE(12)
    END IF
+      
+   
+
+   !Format Statement
+   104 FORMAT (/"Error: Need to specify whether atomic or weight percent.")
+   105 FORMAT ("C"/"C",2X,"To convert a particle flux to rad[Material]")
+   106 FORMAT ("C",2X,"use FM ",ES14.7," ",A5,"-4  1 for neutrons")
+   107 FORMAT ("C",2X," or FM ",ES14.7," ",A5,"-5 -6 for photons."/"C")
+  1000 FORMAT ("TITLE")
+  1001 FORMAT (2X,A)
+  1002 FORMAT ("...",A65)
+  1003 FORMAT ("energy 1.00")
+  1004 FORMAT (A)
+  1005 FORMAT ('* ', A79)
+  1006 FORMAT ("MATERIAL -")
+  1007 FORMAT (2x,A2,2x,F10.7, " -")
+  1008 FORMAT ("DENSITY",2x,F11.7)
+  1009 FORMAT (2x,A2,2x,F10.7)
       
    
 
